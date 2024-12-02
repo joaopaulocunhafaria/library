@@ -9,5 +9,6 @@ import { Author } from 'src/authors/entities/author.entity';
   imports: [TypeOrmModule.forFeature([Book, Author])],
   providers: [BooksService],
   controllers: [BooksController],
+  exports: [BooksService]
 })
 export class BooksModule {}
