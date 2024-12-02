@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Param, Delete, Put } from '@nestjs/common'
 import { AuthorsService } from './authors.service';
 import { CreateAuthorDto } from './dto/create-author.dto';
 import { Author } from './entities/author.entity';
+import { UpdateAuthorDto } from './dto/update-author.dto';
 
 @Controller('authors')
 export class AuthorsController {
@@ -25,6 +26,11 @@ export class AuthorsController {
   @Put(':id')
   update(@Param('id') id: number, @Body() updateAuthorDto: CreateAuthorDto): Promise<Author> {
     return this.authorsService.update(id, updateAuthorDto);
+  }
+
+  @Put('updatewithbooks/:id')
+  updatewithbook(@Param('id') id: number, @Body() updateAuthorDto: UpdateAuthorDto): Promise<Author> {
+    return this.authorsService.updateWithBooks(id, updateAuthorDto);
   }
 
   @Delete(':id')
