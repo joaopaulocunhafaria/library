@@ -6,5 +6,5 @@ export class CreateAuthorDto {
   name: string;
 
   @IsString()
-  bithDate: string;
+  birthDate: string;
 }
