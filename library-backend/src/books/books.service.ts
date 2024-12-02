@@ -7,73 +7,88 @@ import { Author } from 'src/authors/entities/author.entity';
 
 @Injectable()
 export class BooksService {
-  constructor(
-    @InjectRepository(Book)
-    private booksRepository: Repository<Book>,
-    @InjectRepository(Author)
-    private authorsRepository: Repository<Author>,
-  ) {}
+    constructor(
+        @InjectRepository(Book)
+        private booksRepository: Repository<Book>,
+        @InjectRepository(Author)
+        private authorsRepository: Repository<Author>,
+    ) { }
 
-  async create(createBookDto: CreateBookDto): Promise<Book> {
-    const author = await this.authorsRepository.findOneBy({ id: createBookDto.authorId });
 
-    if (!author) {
-      throw new NotFoundException(`Author with ID ${createBookDto.authorId} not found`);
+    
+    async findBooksByAuthor(authorId: number): Promise<Book[]> {
+        const author = await this.authorsRepository.findOneBy({ id: authorId });
+
+        if (!author) {
+            throw new NotFoundException(`Author with ID ${authorId} not found`);
+        }
+
+        return this.booksRepository.find({
+            where: { author: { id: authorId } },
+            relations: ['author'],  
+        });
     }
 
-    const book = this.booksRepository.create({
-      title: createBookDto.title,
-      publicationDate: new Date(createBookDto.publicationDate),
-      author,
-    });
+    async create(createBookDto: CreateBookDto): Promise<Book> {
+        const author = await this.authorsRepository.findOneBy({ id: createBookDto.authorId });
 
-    return this.booksRepository.save(book);
-  }
+        if (!author) {
+            throw new NotFoundException(`Author with ID ${createBookDto.authorId} not found`);
+        }
 
-  async findAll(): Promise<Book[]> {
-    return this.booksRepository.find();
-  }
+        const book = this.booksRepository.create({
+            title: createBookDto.title,
+            publicationDate: new Date(createBookDto.publicationDate),
+            author,
+        });
 
-  async findOne(id: number): Promise<Book> {
-    const book = await this.booksRepository.findOne({
-      where: { id },
-      relations: ['author'],    
-    });
-
-    if (!book) {
-      throw new NotFoundException(`Book with ID ${id} not found`);
+        return this.booksRepository.save(book);
     }
 
-    return book;
-  }
-
-  async update(id: number, updateBookDto: CreateBookDto): Promise<Book> {
-    const book = await this.booksRepository.findOneBy({ id });
-
-    if (!book) {
-      throw new NotFoundException(`Book with ID ${id} not found`);
+    async findAll(): Promise<Book[]> {
+        return this.booksRepository.find();
     }
 
-    const author = await this.authorsRepository.findOneBy({ id: updateBookDto.authorId });
+    async findOne(id: number): Promise<Book> {
+        const book = await this.booksRepository.findOne({
+            where: { id },
+            relations: ['author'],
+        });
 
-    if (!author) {
-      throw new NotFoundException(`Author with ID ${updateBookDto.authorId} not found`);
+        if (!book) {
+            throw new NotFoundException(`Book with ID ${id} not found`);
+        }
+
+        return book;
     }
 
-    book.title = updateBookDto.title;
-    book.publicationDate = new Date(updateBookDto.publicationDate);
-    book.author = author;
+    async update(id: number, updateBookDto: CreateBookDto): Promise<Book> {
+        const book = await this.booksRepository.findOneBy({ id });
 
-    return this.booksRepository.save(book);
-  }
+        if (!book) {
+            throw new NotFoundException(`Book with ID ${id} not found`);
+        }
 
-  async remove(id: number): Promise<void> {
-    const book = await this.booksRepository.findOneBy({ id });
+        const author = await this.authorsRepository.findOneBy({ id: updateBookDto.authorId });
 
-    if (!book) {
-      throw new NotFoundException(`Book with ID ${id} not found`);
+        if (!author) {
+            throw new NotFoundException(`Author with ID ${updateBookDto.authorId} not found`);
+        }
+
+        book.title = updateBookDto.title;
+        book.publicationDate = new Date(updateBookDto.publicationDate);
+        book.author = author;
+
+        return this.booksRepository.save(book);
     }
 
-    await this.booksRepository.delete(id);
-  }
+    async remove(id: number): Promise<void> {
+        const book = await this.booksRepository.findOneBy({ id });
+
+        if (!book) {
+            throw new NotFoundException(`Book with ID ${id} not found`);
+        }
+
+        await this.booksRepository.delete(id);
+    }
 }

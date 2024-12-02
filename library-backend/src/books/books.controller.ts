@@ -7,6 +7,12 @@ import { Book } from './entities/book.entity';
 export class BooksController {
   constructor(private readonly booksService: BooksService) {}
 
+
+  @Get('author/:authorId')
+  findBooksByAuthor(@Param('authorId') authorId: number): Promise<Book[]> {
+    return this.booksService.findBooksByAuthor(authorId);
+  }
+
   @Post()
   create(@Body() createBookDto: CreateBookDto): Promise<Book> {
     return this.booksService.create(createBookDto);
