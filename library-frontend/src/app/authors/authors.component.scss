@@ -1,0 +1,97 @@
+.container {
+    // Usando flexbox para centralizar o conteúdo vertical e horizontalmente
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; // Garantir que ocupe toda a altura da tela
+    text-align: center;
+  
+    // Título h1
+    h1 {
+      font-family: 'Arial', sans-serif;
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #2c3e50; // Cor escura para o título
+      margin-bottom: 20px;
+      text-transform: uppercase; // Título em maiúsculas
+    }
+  
+    // Lista de autores
+    .list-group {
+      width: 100%; // A lista vai ocupar toda a largura possível
+      max-width: 600px; // Limitar a largura da lista para não ficar muito larga em telas grandes
+      margin: 0 auto; // Centralizar a lista
+  
+      // Item da lista
+      .list-group-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        border: 1px solid #ecf0f1; // Bordas suaves entre os itens
+        margin-bottom: 10px; // Espaçamento entre os itens da lista
+        background-color: #ffffff; // Fundo branco para os itens
+        cursor: pointer; // Indicando que é clicável
+        transition: background-color 0.3s ease; // Transição suave para quando o item for hover
+  
+        &:hover {
+          background-color: #f5f5f5; // Fundo mais claro ao passar o mouse
+        }
+  
+        // Estilo do nome do autor
+        span:first-child {
+          font-weight: bold;
+          color: #2c3e50; // Cor escura para o nome
+        }
+  
+        // Estilo da data de nascimento do autor
+        span:last-child {
+          color: #95a5a6; // Cor mais suave para a data de nascimento
+        }
+      }
+    }
+  }
+  
+  // Estilo personalizado para o botão de criação de autor
+button.btn {
+    background-color: #3498db; // Cor de fundo (azul)
+    border: 1px solid #2980b9; // Cor da borda (tom mais escuro de azul)
+    color: white; // Cor do texto
+  
+    // Borda arredondada para o botão
+    border-radius: 5px;
+    margin-bottom: 30px;
+  
+    // Tamanho do botão
+    padding: 12px 24px;
+    font-size: 1.1rem;
+    font-weight: bold;
+  
+    // Efeito de sombra para o botão
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  
+    // Transição suave ao passar o mouse
+    transition: all 0.3s ease;
+  
+    // Quando o botão estiver em foco
+    &:focus {
+      outline: none; // Remove o contorno padrão
+      box-shadow: 0 0 10px rgba(52, 152, 219, 0.6); // Sombra azul clara ao focar no botão
+    }
+  
+    // Quando o botão for hovered
+    &:hover {
+      background-color: #2980b9; // Cor de fundo escura no hover
+      border-color: #1f6390; // Cor de borda mais escura
+      transform: translateY(-2px); // Levantar o botão ao passar o mouse
+    }
+  
+    // Efeito ao clicar no botão
+    &:active {
+      background-color: #1f6390; // Cor de fundo mais escura quando pressionado
+      border-color: #1a4f7b; // Borda mais escura
+      transform: translateY(0); // Botão volta à posição original
+    }
+  }
+  
