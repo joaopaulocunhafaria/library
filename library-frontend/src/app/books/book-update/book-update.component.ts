@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http'; 
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { Observable, of } from 'rxjs';
 
 
 
@@ -12,9 +14,14 @@ interface Book {
   authorId: number;
 }
 
+interface Author {
+  id: number;
+  name: string;
+}
+
 @Component({
   standalone: true,
-  imports :[FormsModule, RouterModule],
+  imports :[FormsModule, RouterModule, CommonModule],
   selector: 'app-book-update',
   templateUrl: './book-update.component.html',
   styleUrls: ['./book-update.component.scss']
@@ -28,6 +35,8 @@ export class BookUpdateComponent implements OnInit {
   } ;  // Usado para armazenar o livro que será atualizado
   isLoading = false;
   errorMessage: string = '';
+  error$: Observable<string | null> = of(null);  
+  authors: Author[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -39,6 +48,17 @@ export class BookUpdateComponent implements OnInit {
     // Pega o 'id' da rota
     const bookId = +this.route.snapshot.paramMap.get('id')!;
     this.getBookDetails(bookId); // Obtém os dados do livro
+    this.loadAuthors()
+  }
+  loadAuthors(): void {
+    this.http.get<Author[]>('http://localhost:3000/authors').subscribe(
+      (authors) => {
+        this.authors = authors;
+      },
+      (error) => {
+        this.error$ = of('Failed to load authors');
+      }
+    );
   }
 
   // Função que busca os detalhes de um livro pela API
