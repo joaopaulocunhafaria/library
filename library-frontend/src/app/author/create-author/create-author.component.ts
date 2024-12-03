@@ -20,17 +20,19 @@ export class CreateAuthorComponent {
 
   // Enviar requisição POST para criar um novo autor
   createAuthor() {
-    const apiUrl = 'http://localhost:3000/authors';
-     // Substitua com sua URL de API
+    const apiUrl = 'http://localhost:3000/authors';  
+
     this.http.post(apiUrl, this.author).subscribe({
-      next: () => {
+      next: (response) => {
+        console.log('Server response:', response);  // Verifique a resposta do servidor
         alert('Author created successfully!');
-        this.router.navigate(['/']); // Redireciona para a página de autores após a criação
+        this.router.navigate(['/']);  // Redireciona para a página de autores após a criação
       },
       error: (error) => {
         console.error('There was an error!', error);
         alert('Failed to create author!');
       }
     });
+    
   }
 }

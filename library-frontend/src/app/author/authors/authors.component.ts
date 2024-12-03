@@ -13,20 +13,20 @@ interface Author {
   selector: 'app-authors',
   standalone: true,
   imports: [CommonModule, RouterModule],
-  templateUrl: './authors.component.html', // Usando o arquivo HTML externo
+  templateUrl: './authors.component.html',
   styleUrls: ['./authors.component.scss']
 })
 export class AuthorsComponent implements OnInit {
   authors: Author[] = [];
 
-  constructor(private router: Router,private http: HttpClient) {}
+  constructor(private router: Router, private http: HttpClient) {}
 
   ngOnInit(): void {
     this.fetchAuthors();
   }
 
   fetchAuthors(): void {
-    const apiUrl = 'http://localhost:3000/authors'; // Substitua pela URL real da API
+    const apiUrl = 'http://localhost:3000/authors';
     this.http.get<Author[]>(apiUrl).subscribe(
       (data) => { 
         this.authors = data;
@@ -38,7 +38,6 @@ export class AuthorsComponent implements OnInit {
   }
 
   viewAuthorDetail(id: number): void {
-    // Navega para a página de detalhes do autor, passando o id
     this.router.navigate(['/author', id]);
   }
 }
