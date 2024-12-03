@@ -17,16 +17,15 @@ export class CreateAuthorComponent {
   };
 
   constructor(private http: HttpClient, private router: Router) { }
-
-  // Enviar requisição POST para criar um novo autor
+ 
   createAuthor() {
     const apiUrl = 'http://localhost:3000/authors';  
 
     this.http.post(apiUrl, this.author).subscribe({
       next: (response) => {
-        console.log('Server response:', response);  // Verifique a resposta do servidor
+        console.log('Server response:', response);  
         alert('Author created successfully!');
-        this.router.navigate(['/']);  // Redireciona para a página de autores após a criação
+        this.router.navigate(['/']);  
       },
       error: (error) => {
         console.error('There was an error!', error);

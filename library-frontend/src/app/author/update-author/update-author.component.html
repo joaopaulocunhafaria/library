@@ -8,8 +8,7 @@
   <div *ngIf="isLoading$ | async" class="text-center">
     <p>Loading author details...</p>
   </div>
-  <form *ngIf="!(isLoading$ | async) && (author$ | async) as author" (ngSubmit)="updateAuthor()">
-    <!-- O formulário será exibido somente quando o autor estiver carregado e o carregamento estiver completo -->
+  <form *ngIf="!(isLoading$ | async) && (author$ | async) as author" (ngSubmit)="updateAuthor()"> 
   
     <div class="mb-3">
       <label for="name" class="form-label">Author Name</label>
@@ -35,7 +34,7 @@
       />
     </div>
   
-    <button type="submit" class="btn btn-primary">Update Author</button>
+    <button type="submit" class="btn btn-primary" >Update Author</button>
     <button class="btn btn-secondary mt-4" [routerLink]="['/authors']">Back to Authors</button>
   </form>
   

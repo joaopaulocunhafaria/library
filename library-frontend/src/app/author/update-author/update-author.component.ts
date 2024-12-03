@@ -67,7 +67,7 @@ export class UpdateAuthorComponent implements OnInit {
       this.http.put(apiUrl, this.author).pipe(
         map(() => {
           this.isLoading$.next(false);
-          this.router.navigate(['/authors']); // Redireciona após sucesso
+          this.router.navigate(['/authors']);  
         }),
         catchError((error) => {
           this.error$.next('Failed to update author');
