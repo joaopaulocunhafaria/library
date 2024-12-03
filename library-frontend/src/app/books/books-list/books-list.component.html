@@ -14,8 +14,8 @@
   </div>
 
   <ul class="list-group" *ngIf="!(isLoading$ | async)">
-    <li *ngFor="let book of books$ | async" class="list-group-item d-flex justify-content-between align-items-center">
-      <div (click)="viewBookDetail(book.id)" style="cursor: pointer; flex-grow: 1;">
+    <li *ngFor="let book of books$ | async" class="list-group-item d-flex justify-content-between align-items-center" (click)="viewBookDetail(book.id)">
+      <div  style="cursor: pointer; flex-grow: 1;">
         <strong>{{ book.title }}</strong>
         <span class="text-muted d-block">{{ book.publicationDate | date:'longDate' }}</span>
       </div>
