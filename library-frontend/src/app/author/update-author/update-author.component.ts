@@ -45,9 +45,10 @@ export class UpdateAuthorComponent implements OnInit {
   fetchAuthorDetails(): void {
     this.isLoading$.next(true);
     const apiUrl = `http://localhost:3000/authors/${this.authorId}`;
-    
+  
     this.http.get<Author>(apiUrl).pipe(
       map((authorData) => {
+        this.author = authorData; // Atualiza `this.author`
         this.authorSubject.next(authorData);
         this.isLoading$.next(false);
       }),
@@ -60,11 +61,17 @@ export class UpdateAuthorComponent implements OnInit {
   }
 
   updateAuthor(): void {
+    console.log("Metodo ativado",this.author?.birthDate )
+    
     if (this.author) {
       this.isLoading$.next(true);
       const apiUrl = `http://localhost:3000/authors/${this.author.id}`;
-
-      this.http.put(apiUrl, this.author).pipe(
+      
+      const authorDto = {
+        name:this.author.name,
+        birthDate:this.author.birthDate
+      }
+      this.http.put(apiUrl,authorDto).pipe(
         map(() => {
           this.isLoading$.next(false);
           this.router.navigate(['/authors']);  

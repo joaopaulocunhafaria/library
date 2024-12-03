@@ -54,6 +54,7 @@ export class AuthorsComponent implements OnInit {
   }
 
   viewAuthorDetail(id: number): void {
+    console.log("Numero de id do autor:" , id)
     this.router.navigate(['/author', id]);
   }
 

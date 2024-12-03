@@ -13,8 +13,9 @@
 
   <ul class="list-group" *ngIf="!(isLoading$ | async)">
     <li *ngFor="let author of authors$ | async"
+    (click)="viewAuthorDetail(author.id)"
       class="list-group-item d-flex justify-content-between align-items-center">
-      <div (click)="viewAuthorDetail(author.id)" class="d-flex align-items-center">
+      <div  class="d-flex align-items-center">
         <strong>{{ author.name }}</strong>
       </div>
       <div>
@@ -22,4 +23,6 @@
       </div>
     </li>
   </ul>
+  <button class="btn btn-secondary mt-4" [routerLink]="['/']">Home</button>
+
 </div>
