@@ -1,0 +1,34 @@
+<div class="container p-4">
+    <h1 class="text-center mb-4">Create New Author</h1>
+    
+    <form (ngSubmit)="createAuthor()">
+      <div class="mb-3">
+        <label for="name" class="form-label">Author Name</label>
+        <input
+          type="text"
+          id="name"
+          class="form-control"
+          [(ngModel)]="author.name"
+          name="name"
+          required
+        />
+      </div>
+  
+      <div class="mb-3">
+        <label for="birthDate" class="form-label">Birth Date</label>
+        <input
+          type="date"
+          id="birthDate"
+          class="form-control"
+          [(ngModel)]="author.birthDate"
+          name="birthDate"
+          required
+        />
+      </div>
+   
+      <button type="submit" class="btn btn-primary">Create Author</button>
+      <button class="btn btn-secondary mt-4" [routerLink]="['/']">Back to Authors</button>
+
+    </form>
+  </div>
+  
