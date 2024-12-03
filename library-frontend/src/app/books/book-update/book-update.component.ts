@@ -78,16 +78,21 @@ export class BookUpdateComponent implements OnInit {
       }
     );
   }
-
-  // Função para atualizar os dados do livro
+ 
   updateBook(): void {
     if (!this.book) return;
 
     const apiUrl = `http://localhost:3000/books/${this.book.id}`;
-    this.http.put(apiUrl, this.book).subscribe(
+    const bookDto = {
+      title: this.book.title,
+      publicationDate: this.book.publicationDate,
+      authorId: Number(this.book.authorId)
+    };
+    console.log(bookDto)
+    this.http.put(apiUrl, bookDto).subscribe(
       () => {
         alert('Livro atualizado com sucesso!');
-        this.router.navigate(['/books']); // Redireciona para a página de livros
+        this.router.navigate(['/books']);  
       },
       (error) => {
         console.error('Erro ao atualizar livro:', error);
