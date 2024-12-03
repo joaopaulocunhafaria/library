@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  backend:
+    container_name: library-backend
+    build:
+      context: ./library-backend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=sqlite:/data/db.sqlite
+    volumes:
+      - ./library-backend:/app
+      - ./library-backend/data:/data
+    working_dir: /app
+    command: npm run start
+    depends_on:
+      - frontend
+    networks:
+      - library-network
+
+  frontend:
+    container_name: library-frontend
+    build:
+      context: ./library-frontend
+      dockerfile: Dockerfile
+    ports:
+      - "4200:4200"
+    working_dir: /app
+    command: npm start
+    volumes:
+      - ./library-frontend:/app
+    depends_on:
+      - backend
+    networks:
+      - library-network
+
+networks:
+  library-network:
+    driver: bridge
