@@ -1,20 +1,21 @@
-<div class="container p-4"> 
-    <h1 class="text-center mb-4" *ngIf="(isLoading$ | async) === false">Book Details</h1>
-      
-   
-    <div *ngIf="(isLoading$ | async) === true" class="text-center">
-      <p>Loading book details...</p>
-    </div>
-     
-    <div *ngIf="(isLoading$ | async) === false && (book$ | async) as book">
-      <h2>{{ book.title }}</h2>
-      <p><strong>Publication Date:</strong> {{ book.publicationDate | date:'longDate' }}</p>
-       
-      <div *ngIf="author$ | async as author">
-        <p><strong>Author:</strong> {{ author.name }}</p>
-      </div>
-    </div>
-   
-    <button class="btn btn-secondary mt-4" [routerLink]="['/books']">Back to Books</button>
+<div class="container p-4">
+  <h1 class="text-center mb-4" *ngIf="(isLoading$ | async) === false">Book Details</h1>
+
+
+  <div *ngIf="(isLoading$ | async) === true" class="text-center">
+    <p>Loading book details...</p>
   </div>
-  
+
+  <div *ngIf="(isLoading$ | async) === false && (book$ | async) as book">
+    <h2>{{ book.title }}</h2>
+    <p><strong>Publication Date:</strong> {{ book.publicationDate | date:'longDate' }}</p>
+
+    <div *ngIf="author$ | async as author">
+      <p><strong>Author:</strong> {{ author.name }}</p>
+    </div>
+
+    <button class="btn btn-secondary mt-4" [routerLink]="['/update-book',book.id]">Edit</button>
+  </div>
+
+  <button class="btn btn-secondary mt-4" [routerLink]="['/books']">Back to Books</button>
+</div>
