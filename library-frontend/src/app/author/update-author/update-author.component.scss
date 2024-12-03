@@ -1,0 +1,71 @@
+.container {
+    // Usando flexbox para centralizar o conteúdo vertical e horizontalmente
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; // Ocupa a altura total da tela
+    text-align: center;
+  
+    // Para o título (h1)
+    h1 {
+      font-family: 'Arial', sans-serif;
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #2c3e50; // Cor escura para o título
+      margin-bottom: 20px;
+      text-transform: uppercase; // Deixar o título em maiúsculas
+    }
+  
+    // Para as informações (p)
+    p {
+      font-family: 'Georgia', serif;
+      font-size: 1.1rem;
+      color: #34495e; // Cor mais suave para o texto
+      line-height: 1.6; // Espaçamento entre as linhas para melhor leitura
+      margin-bottom: 15px; // Espaçamento entre os parágrafos
+  
+      strong {
+        font-weight: bold;
+        color: #1abc9c; // Cor suave para o texto em negrito
+      }
+    }
+  
+    // Estilo para os links (caso haja algum link)
+    a {
+      color: #3498db;
+      text-decoration: none;
+      font-weight: bold;
+      
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+  // Estilizando o botão de Voltar
+button.btn-secondary {
+    background-color: #95a5a6; // Cor de fundo cinza suave
+    color: white; // Cor do texto
+    font-size: 1.1rem;
+    font-weight: bold;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  
+    // Efeito de hover
+    &:hover {
+      background-color: #7f8c8d; // Cor de fundo mais escura ao passar o mouse
+    }
+  
+    // Efeito de clique
+    &:active {
+      background-color: #6c7a89; // Cor de fundo mais escura ao pressionar
+    }
+  
+    // Margem inferior para distanciar do conteúdo
+    margin-bottom: 20px;
+  }
+  
+  

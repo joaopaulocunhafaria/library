@@ -1,8 +1,21 @@
 <div class="container p-4">
-    <h1 class="text-center mb-4">{{ author?.name }}</h1>
-    <p><strong>Birth Date:</strong> {{ author?.birthDate   }}</p>
-  
-    <!-- Botão Voltar -->
-    <button class="btn btn-secondary mb-4" [routerLink]="['/']">Back to Authors</button>
+  <h1 class="text-center mb-4" *ngIf="!(isLoading$ | async)">Author Details</h1>
+
+  <div *ngIf="error$ | async" class="alert alert-danger">
+    {{ error$ | async }}
   </div>
-  
+
+  <div *ngIf="isLoading$ | async" class="text-center">
+    <p>Loading author details...</p>
+  </div>
+
+  <div *ngIf="!(isLoading$ | async) && (author$ | async) as author">
+    <h2>{{ author.name }}</h2>
+    <p><strong>Birth Date:</strong> {{ author.birthDate }}</p>
+    <button class="btn btn-secondary btn-sm" [routerLink]="['/update-author',  author.id]">
+      Edit
+    </button>
+  </div>
+
+  <button class="btn btn-secondary mt-4" [routerLink]="['/authors']">Back to Authors</button>
+</div>
