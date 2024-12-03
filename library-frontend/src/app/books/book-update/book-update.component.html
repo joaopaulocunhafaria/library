@@ -1,0 +1,58 @@
+<div class="container p-4">
+    <h1 class="text-center mb-4">Edit Book</h1>
+  
+    <!-- Exibe mensagem de erro -->
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+  
+    <!-- Exibe mensagem de carregamento -->
+    <div *ngIf="isLoading" class="text-center">
+      <p>Loading book details...</p>
+    </div>
+  
+    <!-- Formulário de edição de livro -->
+    <form *ngIf="!isLoading && book" (ngSubmit)="updateBook()">
+      <div class="mb-3">
+        <label for="title" class="form-label">Book Title</label>
+        <input
+          type="text"
+          id="title"
+          class="form-control"
+          [(ngModel)]="book.title"
+          name="title"
+          required
+        />
+      </div>
+  
+      <div class="mb-3">
+        <label for="publicationDate" class="form-label">Publication Date</label>
+        <input
+          type="date"
+          id="publicationDate"
+          class="form-control"
+          [(ngModel)]="book.publicationDate"
+          name="publicationDate"
+          required
+        />
+      </div>
+  
+      <div class="mb-3">
+        <label for="author" class="form-label">Author</label>
+        <select
+          id="author"
+          class="form-select"
+          [(ngModel)]="book.authorId"
+          name="author"
+          required
+        >
+          <option *ngFor="let author of authors" [value]="author.id">{{ author.name }}</option>
+        </select>
+      </div>
+  
+      <button type="submit" class="btn btn-primary">Update Book</button>
+    </form>
+
+    <button class="btn btn-secondary mt-4" [routerLink]="['/books']">Back to Books</button>
+  </div>
+  

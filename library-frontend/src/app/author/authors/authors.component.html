@@ -1,19 +1,28 @@
 <div class="container p-4">
-    <h1 class="text-center mb-4">Authors</h1>
-    <button class="btn btn-primary mb-4" [routerLink]="['/create-author']">Create New Author</button>
-
-  
-    <ul class="list-group">
-      <li
-        *ngFor="let author of authors"
-        class="list-group-item d-flex justify-content-between align-items-center"
-        (click)="viewAuthorDetail(author.id)"
-      >
-        <span>
-          <strong>{{ author.name }}</strong>
-        </span>
-        <span class="text-muted">{{ author.birthDate | date:'longDate' }}</span>
-      </li>
-    </ul>
+  <h1 class="text-center mb-4" *ngIf="!(isLoading$ | async)">Authors</h1>
+  <div class="text-center mb-4">
+    <button class="btn btn-primary" [routerLink]="['/create-author']">Create New Author</button>
   </div>
-  
+  <div *ngIf="error$ | async" class="alert alert-danger">
+    {{ error$ | async }}
+  </div>
+
+  <div *ngIf="isLoading$ | async" class="text-center">
+    <p>Loading authors...</p>
+  </div>
+
+  <ul class="list-group" *ngIf="!(isLoading$ | async)">
+    <li *ngFor="let author of authors$ | async"
+    (click)="viewAuthorDetail(author.id)"
+      class="list-group-item d-flex justify-content-between align-items-center">
+      <div  class="d-flex align-items-center">
+        <strong>{{ author.name }}</strong>
+      </div>
+      <div>
+        <button class="btn btn-danger btn-sm" (click)="deleteAuthor(author.id)">Delete</button>
+      </div>
+    </li>
+  </ul>
+  <button class="btn btn-secondary mt-4" [routerLink]="['/']">Home</button>
+
+</div>

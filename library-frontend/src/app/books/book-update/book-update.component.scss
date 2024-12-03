@@ -1,0 +1,74 @@
+.container {
+  // Centrando o conteúdo na tela
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9; // Cor de fundo suave para o formulário
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1.text-center {
+  color: #3498db; // Cor azul clara para o título
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+}
+
+form {
+  // Garante que o formulário tenha um bom espaçamento e seja legível
+  display: flex;
+  flex-direction: column;
+}
+
+.form-label {
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.form-control {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+
+  &:focus {
+    border-color: #3498db; // Cor de borda azul ao focar no campo
+    outline: none;
+  }
+
+  // Estilos para inputs de texto
+  &.form-control[type="text"],
+  &.form-control[type="date"] {
+    background-color: #fff;
+  }
+}
+
+// Estilizando o botão de submit
+button.btn {
+  background-color: #3498db; // Cor de fundo azul
+  color: white; // Cor do texto
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 30px;
+
+  // Efeito de hover
+  &:hover {
+    background-color: #2980b9; // Cor de fundo ao passar o mouse
+  }
+
+  // Efeito ao clicar
+  &:active {
+    background-color: #1f6390; // Cor mais escura ao pressionar
+  }
+}
+
+.mb-3 {
+  margin-bottom: 20px;
+}

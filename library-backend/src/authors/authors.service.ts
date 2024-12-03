@@ -87,7 +87,19 @@ export class AuthorsService {
     }
 
     async remove(id: number): Promise<void> {
+
         const author = await this.authorsRepository.findOneBy({ id });
+
+        
+        const books = await this.booksRepository.find({ where: { id } });
+    
+        if (!books  ) {
+            throw new NotFoundException(`No books found for author with ID ${id}`);
+        }
+     
+        if (books.length !== 0  ) {
+            await Promise.all(books.map(book => this.booksRepository.delete(book.id)));
+        }
 
         if (!author) {
             throw new NotFoundException(`Author with ID ${id} not found`);
@@ -95,6 +107,7 @@ export class AuthorsService {
 
         await this.authorsRepository.delete(id);
     }
+
     create(createAuthorDto: CreateAuthorDto): Promise<Author> {
         const author = this.authorsRepository.create(createAuthorDto);
         return this.authorsRepository.save(author);

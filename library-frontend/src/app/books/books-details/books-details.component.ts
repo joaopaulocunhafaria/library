@@ -8,7 +8,9 @@ interface Book {
   id: number;
   title: string;
   publicationDate: string;
-  authorId: number;
+  author:{
+    id:number
+  }
 }
 
 interface Author {
@@ -55,7 +57,8 @@ export class BooksDetailsComponent implements OnInit {
     this.http.get<Book>(`${this.apiUrl}/${bookId}`).pipe(
       switchMap((book) => { 
         this.book$.next(book);
-        return this.http.get<Author>(`${this.authorApiUrl}/${book.authorId}`);
+        console.log("Author ID:", book)
+        return this.http.get<Author>(`${this.authorApiUrl}/${book.author.id}`);
       }),
       map((author) => { 
         this.author$.next(author);

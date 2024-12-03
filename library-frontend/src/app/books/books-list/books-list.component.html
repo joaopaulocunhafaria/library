@@ -1,28 +1,27 @@
 <div class="container p-4">
-    <h1 class="text-center mb-4">Books</h1>
-   
-    <div class="text-center mb-4">
-        <button class="btn btn-primary" [routerLink]="['/create-book']">Create New Book</button>
-      </div>
-    <div *ngIf="error$ | async" class="alert alert-danger">
-      {{ error$ | async }}
-    </div>
-   
-    <div *ngIf="isLoading$ | async" class="text-center">
-      <p>Loading books...</p>
-    </div>
-   
-    <ul class="list-group" *ngIf="!(isLoading$ | async)">
-      <li
-        *ngFor="let book of books$ | async"
-        class="list-group-item d-flex justify-content-between align-items-center"
-        (click)="viewBookDetail(book.id)"
-      >
-        <span>
-          <strong>{{ book.title }}</strong>
-        </span>
-        <span class="text-muted">{{ book.publicationDate | date:'longDate' }}</span>
-      </li>
-    </ul>
+  <h1 class="text-center mb-4">Books</h1>
+
+  <div class="text-center mb-4">
+    <button class="btn btn-primary" [routerLink]="['/create-book']">Create New Book</button>
   </div>
-  
+
+  <div *ngIf="error$ | async" class="alert alert-danger">
+    {{ error$ | async }}
+  </div>
+
+  <div *ngIf="isLoading$ | async" class="text-center">
+    <p>Loading books...</p>
+  </div>
+
+  <ul class="list-group" *ngIf="!(isLoading$ | async)">
+    <li *ngFor="let book of books$ | async" class="list-group-item d-flex justify-content-between align-items-center" (click)="viewBookDetail(book.id)">
+      <div  style="cursor: pointer; flex-grow: 1;">
+        <strong>{{ book.title }}</strong>
+        <span class="text-muted d-block">{{ book.publicationDate | date:'longDate' }}</span>
+      </div>
+      <button class="btn btn-danger btn-sm" (click)="deleteBook(book.id)">Delete</button>
+    </li>
+  </ul>
+
+  <button class="btn btn-secondary mt-4" [routerLink]="['/']">Home</button>
+</div>

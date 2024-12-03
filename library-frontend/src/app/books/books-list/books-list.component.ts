@@ -60,4 +60,21 @@ export class BooksListComponent implements OnInit {
   viewBookDetail(id: number): void {
     this.router.navigate(['/books', id]);
   }
+
+  deleteBook(bookId: number) {
+    const confirmDelete = confirm('Are you sure you want to delete this book?');
+    if (confirmDelete) {
+      this.isLoading$.next(true);
+      this.http.delete(`http://localhost:3000/books/${bookId}`).subscribe({
+        next: () => {
+          alert('Book deleted successfully.');
+          this.fetchBooks(); // Atualiza a lista de livros após exclusão
+        },
+        error: () => {
+          alert('Failed to delete the book.');
+          this.isLoading$.next(false);
+        },
+      });
+    }
+  }
 }
