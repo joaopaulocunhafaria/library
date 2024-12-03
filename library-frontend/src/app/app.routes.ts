@@ -14,6 +14,6 @@ export const appRoutes: Routes = [
     { path: 'create-author', component: CreateAuthorComponent },
     { path: 'books', component: BooksListComponent },
     { path: 'books/:id', component: BooksDetailsComponent },
-    { path: 'create-books', component: CreateBookComponent },
+    { path: 'create-book', component: CreateBookComponent },
     
   ];

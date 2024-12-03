@@ -1,1 +1,59 @@
-<p>create-book works!</p>
+<div class="container p-4">
+    <h1 class="text-center mb-4">Create New Book</h1>
+  
+    <!-- Exibe mensagem de erro se houver -->
+    <div *ngIf="error$ | async as error" class="alert alert-danger">
+      {{ error }}
+    </div>
+  
+    <!-- Exibe mensagem de carregamento enquanto os dados estão sendo carregados -->
+    <div *ngIf="isLoading$ | async" class="text-center">
+      <p>Creating book...</p>
+    </div>
+  
+    <!-- Formulário para criação de livro -->
+    <form (ngSubmit)="createBook()">
+      <div class="mb-3">
+        <label for="title" class="form-label">Book Title</label>
+        <input
+          type="text"
+          id="title"
+          class="form-control"
+          [(ngModel)]="book.title"
+          name="title"
+          required
+        />
+      </div>
+  
+      <div class="mb-3">
+        <label for="publicationDate" class="form-label">Publication Date</label>
+        <input
+          type="date"
+          id="publicationDate"
+          class="form-control"
+          [(ngModel)]="book.publicationDate"
+          name="publicationDate"
+          required
+        />
+      </div>
+  
+      <div class="mb-3">
+        <label for="authorId" class="form-label">Author</label>
+        <select
+          id="authorId"
+          class="form-control"
+          [(ngModel)]="book.authorId"
+          name="authorId"
+          required
+        >
+          <option *ngFor="let author of authors" [value]="author.id">
+            {{ author.name }}
+          </option>
+        </select>
+      </div>
+  
+      <button type="submit" class="btn btn-primary">Create Book</button>
+      <button class="btn btn-secondary mt-4" [routerLink]="['/books']">Back to Books</button>
+    </form>
+  </div>
+  

@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { BehaviorSubject, catchError, map, Observable, of, switchMap } from 'rxjs';
 
 interface Book {
   id: number;
   title: string;
   publicationDate: string;
-  authorId: number;  // Relacionamento com o autor
 }
 
 @Component({
@@ -15,30 +15,49 @@ interface Book {
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './books-list.component.html',
-  styleUrls: ['./books-list.component.scss']
+  styleUrls: ['./books-list.component.scss'],
 })
 export class BooksListComponent implements OnInit {
-  books: Book[] = [];
+  private booksSubject: BehaviorSubject<Book[] | null> = new BehaviorSubject<Book[] | null>(null);
+  books$: Observable<Book[] | null> = this.booksSubject.asObservable();  
+  isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);  
+  error$: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);  
 
-  constructor(private router: Router, private http: HttpClient) {}
+  private apiUrl: string = 'http://localhost:3000/books'; 
+
+  constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit(): void {
     this.fetchBooks();
-  }
-
+  } 
   fetchBooks(): void {
-    const apiUrl = 'http://localhost:3000/books';  // URL da sua API
-    this.http.get<Book[]>(apiUrl).subscribe(
-      (data) => {
-        this.books = data;
-      },
-      (error) => {
-        console.error('Erro ao buscar livros:', error);
-      }
-    );
-  }
+    this.isLoading$.next(true);  
+    this.error$.next(null);  
 
+    this.http.get<Book[]>(this.apiUrl).pipe( 
+      map((data) => { 
+        return data;
+      }),
+      catchError((error) => { 
+        this.error$.next('Erro ao carregar livros');
+        return of([]);  
+      }),
+      switchMap((books) => { 
+        this.booksSubject.next(books);
+        return of(books);
+      })
+    ).subscribe({
+      next: () => {
+        this.isLoading$.next(false); 
+      },
+      error: (err) => {
+        console.error('Erro:', err);
+        this.isLoading$.next(false);  
+      }
+    });
+  }
+ 
   viewBookDetail(id: number): void {
-    this.router.navigate(['/book', id]);
+    this.router.navigate(['/books', id]);
   }
 }
